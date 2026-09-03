@@ -1,11 +1,22 @@
 <?php
-
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductControllerController;
+use App\Http\Controllers\ProductController;
 
-Route::get('/whoami', function () {
-    return 'Jayvee Espanola Alapide | 2023-71200 | Block 4c | ITRACKB4 Laravel 12';
+
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/whoami', function (){
+    return 'Jayvee Alapide | 2023-71200 | Block 4C | ITRACKB4 Laravel 12';
+});
+
+Route::get('/products/filter/{Value?}', [ProductController::class, 'filter'])
+    ->name('products.filter');
+Route::get('/products', [ProductController::class, 'index'])
+    ->name('products.index');
+
+Route::get('/products/featured', [ProductController::class, 'featured'])
+    ->name('products.featured');
+Route::get('/products/{id}', [ProductController::class, 'show'])
+    ->name('products.show');

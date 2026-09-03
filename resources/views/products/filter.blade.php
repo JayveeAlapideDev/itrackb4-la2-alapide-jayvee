@@ -18,7 +18,7 @@
  
         @foreach ($products as $product)
             <tr>
-                <td><a href="{{ route('products.show', $product['id'])}}"> {{ $product['name']}}</a></td>
+                <td><a href="/products/{{$product['id']}}"> {{ $product['name']}}</a></td>
                 <td>{{ $product['price'] }}</td>
                 <td>{{ $product['stock'] }}</td>
                 <td>{{ $product['tag'] }}</td>
@@ -29,4 +29,3 @@
     </table>
 </body>
 </html>
-

@@ -1,3 +1,20 @@
+/*
+Q1. Explain the order you placed your featured route and your detail route in, and what would happen if you swapped them.
+    > ANSWER 
+         I placed my featured route (/products/featured) above my detail route (/products/{id}) in web.php.
+This matters because Laravel matches routes in the order they're defined, from top to bottom, and stops at the first match. My detail route uses {id} as a wildcard, which matches any value in that URL position  including the literal text "featured". So if I visited /products/featured with the detail route listed first, Laravel would match it to /products/{id} and try to run show('featured'), treating "featured" as if it were a product ID. Since 'featured' isn't a valid key in my products array, this would cause an error (like "Undefined array key" or a 404), rather than reaching my intended featured() method.
+
+Q2. What happens when someone visits an id that does not exist in your data, and what did you write to make that happen?
+    >ANSWER
+        When someone visits an id that doesn't exist in my data (e.g. /products/99), my show() method checks whether that id exists in the $products array using isset(). If it doesn't, I call abort(404), which tells Laravel to immediately stop and return Laravel's default 404 "Not Found" error page, instead of trying to render a view with missing data.
+
+Q3. Why do your links use route names instead of typed URLs? Give one concrete thing that would break if they did not.
+    >ANSWER
+        I use route names instead of typed URLs so that my links don't break if the actual URL path changes later. Route names act as a fixed reference point — Laravel generates the correct URL for me based on the route definition, not on text I manually typed into every blade file.
+Concrete example of what would break: If I decided to rename my URL structure from /products/{id} to /items/{id} (a common refactor), every hardcoded link like href="/products/{{$product['id']}}" across all my blade files would now point to the wrong, broken URL — I'd have to manually find and update each one. But if I used href="{{ route('products.show', $product['id']) }}", I'd only need to update the URL once, in the route definition itself, and every link across the app would automatically generate the correct new path.
+
+
+*/
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
